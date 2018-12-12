@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="text-center">
+    <h1>Formulario de Creación de Recursos</h1>
+</div>
+
+<form method="POST">
+    <div class="row">
+        {% include 'commons/error_form.html' %}
+    </div>
+    {% csrf_token %}
+
+    <div class="mx-auto col-sm-8">
+        {{form.as_p}}
+    </div>
+
+    <div class="float-right col-sm-4">
+        <input class="btn btn-primary" type="submit" value="Guardar">
+    </div>
+</form>
+
+{% endblock body %}

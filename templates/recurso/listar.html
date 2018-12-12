@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="text-center">
+    <h1>Lista de Recursos</h1>
+</div>
+<form>
+<div class="mx-auto col-sm-6">
+
+{{filter_form.tipo}}
+
+    <input class="btn btn-primary" type="submit" value="Filtrar">
+    </div>
+
+
+{% if recursos %}
+<div class="mx-auto col-sm-11">
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Recurso</th>
+                <th>Tipo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recurso in recursos %}
+            <tr>
+                <td><a href="{% url 'detalle-recurso' recurso.id %}">{{recurso.id}}</a></td>
+                <td>{{recurso}}</td>
+                <td>{{recurso.tipo_recurso}}</td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% else %}
+
+    <h2>No existen recursos cargados en el sistema</h2>
+
+{% endif %}
+
+{% if is_paginated %}
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+
+      {% if page_obj.has_previous %}
+
+      <li class="page-item">
+      <a class="page-link" href="?page={{page_obj.previous_page_number}}&tipo={{filter_form.tipo.value}}">Anterior</a>
+    </li>
+
+      {% else %}
+    <li class="page-item disabled">
+      <a class="page-link">Anterior</a>
+    </li>
+      {% endif %}
+
+
+      {% for page in paginator.page_range %}
+          <li class="page-item"><a class="page-link" href="?page={{page}}&tipo={{filter_form.tipo.value}}">{{page}}</a></li>
+      {% endfor%}
+
+
+       {% if page_obj.has_next %}
+
+      <li class="page-item">
+      <a class="page-link" href="?page={{page_obj.next_page_number}}&tipo={{filter_form.tipo.value}}">Siguiente</a>
+    </li>
+
+      {% else %}
+    <li class="page-item disabled">
+      <a class="page-link">Siguiente</a>
+    </li>
+      {% endif %}
+  </ul>
+</nav>
+
+
+{% endif %}
+
+    </form>
+
+{% endblock body %}
